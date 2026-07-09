@@ -1,0 +1,1774 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>in another life...</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        /* HỆ MÀU OCEAN VIBES NGUYÊN BẢN CHUẨN ĐÍNH KÈM */
+        :root {
+            --clouds: #FFF8E7;       
+            --clear-skies: #8CC1E9;  
+            --deep-ocean: #12284B;   
+            --card-bg: rgba(18, 40, 75, 0.75); 
+            --blueberry: #0055A0;   
+            --bluebird: #438BC4;    
+            --accent-warm: #F43F5E;
+            --glass-border: rgba(140, 193, 233, 0.25); 
+            --glass-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Mona Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: background 0.2s, border-color 0.2s, transform 0.2s;
+        }
+
+        body {
+            background-color: var(--deep-ocean);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(140, 193, 233, 0.15) 0px, transparent 60%),
+                radial-gradient(at 100% 100%, rgba(67, 139, 196, 0.1) 0px, transparent 60%);
+            color: var(--clouds);
+            min-height: 100vh;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        body :not(.receipt-card, .receipt-card *, .barcode-text) {
+            text-transform: lowercase;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                grid-template-columns: 1.15fr 1.85fr;
+            }
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1.5px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: var(--glass-shadow);
+            position: relative;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(140, 193, 233, 0.4);
+        }
+
+        header {
+            width: 100%;
+            max-width: 1280px;
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .header-title h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            color: var(--clouds);
+            display: inline-block;
+        }
+
+        .header-title .quote-subtitle {
+            color: #8CC1E9;
+            opacity: 0.8;
+            font-size: 0.95rem;
+            margin-top: 10px;
+            font-weight: 600;
+            line-height: 1.5;
+            letter-spacing: 0.02em;
+            font-style: italic;
+            text-transform: none !important;
+        }
+
+        /* GIAO DIỆN CỤC ĐỒNG BỘ DẠNG CAPSULE NGUYÊN BẢN CHUẨN image_10b53f.png */
+        .sync-status-capsule {
+            background: rgba(18, 40, 75, 0.6);
+            border: 1.5px solid rgba(140, 193, 233, 0.3);
+            padding: 0.6rem 1.4rem;
+            border-radius: 99px;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #8CC1E9;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            user-select: none;
+        }
+
+        .sync-status-capsule:hover {
+            border-color: var(--clear-skies);
+            background: rgba(140, 193, 233, 0.1);
+        }
+
+        /* MENU THẢ XUỐNG KHI CLICK VÀO CỤC ĐỒNG BỘ */
+        .sync-dropdown {
+            position: absolute;
+            top: 105%;
+            right: 0;
+            width: 240px;
+            background: rgba(14, 30, 58, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1.5px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1rem;
+            box-shadow: var(--glass-shadow);
+            display: none;
+            z-index: 100;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .sync-dropdown.show {
+            display: flex;
+        }
+
+        .backup-input-field {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            outline: none;
+            color: var(--clouds);
+            font-size: 0.9rem;
+            font-weight: 700;
+            padding: 0.5rem;
+            border-radius: 8px;
+            width: 100%;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .backup-input-field::placeholder {
+            color: var(--clear-skies);
+            opacity: 0.5;
+            letter-spacing: 0px;
+        }
+
+        .backup-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background-color: #10B981;
+            box-shadow: 0 0 10px #10B981;
+        }
+
+        .timer-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .timer-header-lbl {
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            color: #8CC1E9;
+            opacity: 0.8;
+            margin-bottom: 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.4rem 1rem;
+            border-radius: 99px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .timer-display {
+            font-size: 4.6rem; 
+            white-space: nowrap; 
+            font-weight: 900;
+            color: var(--clouds);
+            margin: 0.5rem 0 1.8rem;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            text-shadow: 0 0 40px rgba(140, 193, 233, 0.3);
+            font-variant-numeric: tabular-nums;
+            width: 100%;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+            max-width: 360px;
+        }
+
+        .btn {
+            flex: 1;
+            border: none;
+            padding: 0.9rem 1.2rem;
+            border-radius: 16px;
+            font-weight: 850;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--blueberry);
+            color: var(--clouds);
+            box-shadow: 0 4px 15px rgba(0, 85, 160, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--bluebird);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid var(--glass-border);
+            color: var(--clear-skies);
+        }
+
+        .btn-outline:hover {
+            background: rgba(140, 193, 233, 0.15);
+            color: var(--clouds);
+            transform: translateY(-2px);
+        }
+
+        .polaroid-section-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 1rem;
+            color: #8CC1E9;
+            opacity: 0.8;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            padding-bottom: 0.5rem;
+        }
+
+        .polaroid-frame {
+            background: #FFFDF5;
+            padding: 12px 12px 16px 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 340px;
+            transform: rotate(-1deg);
+        }
+
+        .polaroid-frame:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+
+        .polaroid-screen {
+            width: 100%;
+            height: 190px;
+            background: #E2E8F0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .polaroid-screen img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .polaroid-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            color: #64748B;
+            font-size: 0.75rem;
+            font-weight: 750;
+            text-align: center;
+            position: absolute;
+        }
+
+        .polaroid-input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #475569;
+            outline: none;
+            margin-top: 12px;
+            padding: 4px;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+            text-transform: none !important;
+        }
+
+        .notes-area {
+            width: 100%;
+            height: 140px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1.5px solid var(--glass-border);
+            border-radius: 18px;
+            padding: 1rem;
+            color: var(--clouds);
+            resize: none;
+            outline: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+
+        .notes-area:focus {
+            border-color: var(--clear-skies);
+        }
+
+        .todo-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .todo-header-row h2 {
+            font-size: 1.3rem;
+            font-weight: 850;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .todo-header-row h2 span {
+            color: var(--clear-skies);
+            font-size: 0.95rem;
+        }
+
+        .btn-clear-tasks {
+            background: rgba(244, 63, 94, 0.15);
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            color: var(--accent-warm);
+            padding: 0.4rem 0.9rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .btn-clear-tasks:hover {
+            background: var(--accent-warm);
+            color: var(--clouds);
+        }
+
+        .todo-input-container {
+            display: flex;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .todo-field {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1.5px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 0.9rem 1.2rem;
+            color: var(--clouds);
+            outline: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .todo-field:focus {
+            border-color: var(--clear-skies);
+        }
+
+        /* INPUT EDIT SỬA TÊN NGAY TRÊN DÒNG */
+        .inline-edit-input {
+            background: rgba(0, 0, 0, 0.4) !important;
+            border: 1px solid var(--clear-skies) !important;
+            color: var(--clouds) !important;
+            padding: 0.3rem 0.6rem !important;
+            border-radius: 8px !important;
+            font-size: 0.95rem !important;
+            font-weight: 700 !important;
+            width: 100%;
+            outline: none;
+            text-transform: none !important;
+        }
+
+        /* INPUT PHÚT/GIÂY CỘNG THÊM NGAY TRÊN DÒNG */
+        .inline-time-input {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--clear-skies);
+            color: var(--clouds);
+            border-radius: 6px;
+            padding: 2px 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            outline: none;
+            text-align: center;
+        }
+
+        .todo-viewport {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-height: 380px;
+            overflow-y: auto;
+            padding-right: 0.25rem;
+        }
+
+        .todo-viewport::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .todo-viewport::-webkit-scrollbar-thumb {
+            background: var(--glass-border);
+            border-radius: 10px;
+        }
+
+        .todo-row-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            cursor: pointer;
+        }
+
+        .todo-row-item:hover {
+            border-color: var(--glass-border);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .todo-row-item.active-running {
+            border-color: var(--clear-skies);
+            background: rgba(140, 193, 233, 0.08);
+            box-shadow: 0 0 15px rgba(140, 193, 233, 0.15);
+        }
+
+        .todo-row-item.done-state {
+            opacity: 0.5;
+        }
+
+        .todo-drag-pin {
+            cursor: grab;
+            opacity: 0.3;
+            padding: 0 0.2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .todo-drag-pin:hover { opacity: 0.8; }
+
+        .todo-item-core {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .todo-square-box {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--clear-skies);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--clouds);
+            font-size: 0.75rem;
+            font-weight: 900;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .todo-square-box.checked-fill {
+            background: var(--blueberry);
+            border-color: var(--blueberry);
+        }
+
+        .todo-content-block {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .todo-title-txt {
+            font-size: 0.95rem;
+            font-weight: 700;
+            word-break: break-word;
+            text-transform: none !important;
+        }
+
+        .done-state .todo-title-txt {
+            text-decoration: line-through;
+            color: #8CC1E9;
+            opacity: 0.7;
+        }
+
+        .todo-time-ticker {
+            font-size: 0.75rem;
+            color: #8CC1E9;
+            opacity: 0.8;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ticker-active-badge {
+            background: var(--blueberry);
+            color: var(--clouds);
+            font-size: 0.65rem;
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-weight: 800;
+        }
+
+        .todo-row-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .manual-time-trigger {
+            background: transparent;
+            border: none;
+            color: #8CC1E9;
+            opacity: 0.8;
+            cursor: pointer;
+            padding: 0.3rem;
+            border-radius: 6px;
+        }
+        .manual-time-trigger:hover { color: var(--clear-skies); background: rgba(255,255,255,0.05); }
+
+        .todo-inline-btn {
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.3);
+            cursor: pointer;
+            padding: 0.3rem;
+            border-radius: 8px;
+        }
+
+        .todo-inline-btn:hover {
+            color: var(--clear-skies);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .todo-inline-btn.delete-trash:hover {
+            color: var(--accent-warm);
+            background: rgba(244, 63, 94, 0.1);
+        }
+
+        .receipt-card {
+            background: #FFFDF5;
+            border-radius: 16px;
+            padding: 2.2rem;
+            color: #1E293B;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Mona Sans', sans-serif !important;
+        }
+
+        .receipt-card, .receipt-card * {
+            text-transform: none !important;
+        }
+
+        .receipt-dashed-divider {
+            border-top: 1.5px dashed #64748B;
+            margin: 1.2rem 0;
+            height: 0;
+            width: 100%;
+        }
+
+        .receipt-header-center {
+            text-align: center;
+            margin-bottom: 0.2rem;
+        }
+
+        .receipt-header-center h3 {
+            font-size: 1.8rem;
+            font-weight: 850;
+            color: #0F172A;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+
+        .receipt-header-center .sub-title {
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            color: #334155;
+            margin-bottom: 4px;
+        }
+
+        .receipt-header-center .date-stamp {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #475569;
+        }
+
+        .receipt-data-table {
+            width: 100%;
+            margin: 0.4rem 0;
+        }
+
+        .receipt-data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.35rem 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #0F172A;
+        }
+
+        .receipt-data-row span {
+            color: #1E293B;
+        }
+
+        .receipt-data-row strong {
+            font-weight: 850;
+            color: #0F172A;
+        }
+
+        .receipt-details-title {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #334155;
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.01em;
+        }
+
+        .receipt-items-grid {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .receipt-items-grid th {
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #64748B;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #CBD5E1;
+        }
+
+        .receipt-items-grid td {
+            padding: 0.7rem 0;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #1E293B;
+            border-bottom: 1px dashed #E2E8F0;
+        }
+
+        .receipt-quote-footer {
+            text-align: center;
+            font-size: 0.8rem;
+            font-style: italic;
+            color: #64748B;
+            margin: 0.5rem 0 1.2rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .receipt-barcode-zone {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 38px;
+            gap: 3px;
+            margin-bottom: 0.4rem;
+        }
+
+        .receipt-barcode-zone div {
+            background: #0F172A;
+            height: 100%;
+        }
+
+        .barcode-text {
+            text-align: center;
+            font-family: monospace !important;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            font-weight: 700;
+            color: #475569;
+        }
+
+        .btn-download-receipt {
+            margin-top: 1.5rem;
+            width: 100%;
+            background: #0F172A;
+            color: #FFFDF5;
+            padding: 0.9rem;
+            border-radius: 14px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-download-receipt:hover {
+            background: #1E293B;
+        }
+
+        /* NÂNG CẤP KHÔNG GIAN BẢNG THỐNG KÊ RỘNG RÃI TOÀN DIỆN */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem; 
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1.5px solid rgba(140, 193, 233, 0.15); 
+            border-radius: 18px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-box .val {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--clear-skies);
+            line-height: 1.2;
+        }
+
+        .stat-box .val.alert-color { color: var(--accent-warm); }
+
+        .stat-box .lbl {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #8CC1E9;
+            opacity: 0.7;
+            margin-top: 8px;
+            letter-spacing: 0.04em;
+        }
+
+        .chart-box-wrapper {
+            width: 100%;
+            height: 170px;
+            margin-top: 2rem;
+        }
+
+        .toast-popup {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--blueberry);
+            border: 1px solid var(--glass-border);
+            color: var(--clouds);
+            padding: 0.9rem 1.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title">
+            <h1>in another life...</h1>
+            <div class="quote-subtitle">돈, 멋, 명예, love and what?<br>Ooh, take what you want</div>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem; position: relative;">
+            <span id="headerLiveDateDisplay" style="font-size: 0.85rem; color: var(--clear-skies); font-weight: 700; font-style: italic; letter-spacing: 0.03em;"></span>
+            
+            <div class="sync-status-capsule" onclick="toggleSyncDropdownMenu(event)">
+                <div class="backup-dot"></div>
+                <span id="syncCapsuleLabelText">mã sao lưu 8 số</span>
+            </div>
+
+            <div class="sync-dropdown" id="syncDropdownContainer" onclick="event.stopPropagation()">
+                <div style="font-size: 0.8rem; color: var(--clear-skies); font-weight: 800; margin-bottom: 2px;">cấu hình mã sao lưu</div>
+                <input type="text" id="directBackupInput" class="backup-input-field" placeholder="nhập 8 số..." maxlength="8" oninput="executeDirectBackupSync()">
+                <button onclick="generateRandomBackupCode()" style="background: rgba(255,255,255,0.08); border: 1px dashed var(--glass-border); color: var(--clear-skies); padding: 5px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; cursor: pointer; margin-top: 4px; width: 100%;">🎲 tạo mã ngẫu nhiên</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+            <section class="glass-card timer-card">
+                <div class="timer-header-lbl">every second counts</div>
+                <div class="timer-display" id="mainTimeDisplay">00h 00m 00s</div>
+                <div class="timer-controls">
+                    <button class="btn btn-primary" id="btnToggleTimer" onclick="toggleTimerCore()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> bắt đầu
+                    </button>
+                    <button class="btn btn-outline" onclick="resetTimerCore()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.65 6.35A7.958 7.958 0 0 0 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg> đặt lại
+                    </button>
+                </div>
+            </section>
+
+            <section class="glass-card" style="display: flex; flex-direction: column; align-items: center;">
+                <div class="polaroid-section-title">your chance of meeting them</div>
+                <div class="polaroid-frame">
+                    <div class="polaroid-screen" onclick="triggerPolaroidUpload()">
+                        <img id="polaroidImgRender" alt="polaroid-content">
+                        <div class="polaroid-placeholder" id="polaroidLoadingState">
+                            <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span style="margin-top: 6px;">nhấp để tải lên hình ảnh</span>
+                        </div>
+                    </div>
+                    <input type="text" id="polaroidCaptionInput" class="polaroid-input" placeholder="ghi vài dòng cảm xúc..." oninput="savePolaroidCaption()">
+                </div>
+                <input type="file" id="hiddenFileUploader" accept="image/*" style="display: none;" onchange="executeSmartImageCompress(event)">
+            </section>
+
+            <section class="glass-card" style="display: flex; flex-direction: column; gap: 1rem;">
+                <h3 style="font-size: 1.1rem; font-weight: 850; color: #8CC1E9; opacity: 0.8;">sổ tay ghi chú nhanh</h3>
+                <textarea class="notes-area" id="quickNotesField" placeholder="ghi chép nhanh ý tưởng tại đây..." oninput="syncNotesToStorage()"></textarea>
+            </section>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+            <section class="glass-card">
+                <div class="todo-header-row">
+                    <h2>nhiệm vụ hôm nay <span id="taskCounterBadge">(0 nhiệm vụ)</span></h2>
+                    <button class="btn-clear-tasks" onclick="wipeAllTasks()">xóa tất cả</button>
+                </div>
+                
+                <div class="todo-input-container">
+                    <input type="text" id="mainTodoInput" class="todo-field" placeholder="nhập nhiệm vụ mới... (nhấn enter hoặc dán danh sách nhiều dòng)" onkeydown="interceptTodoInputKey(event)">
+                </div>
+
+                <ul class="todo-viewport" id="todoListViewport"></ul>
+            </section>
+
+            <section class="receipt-card" id="receiptVisualPrintZone">
+                <div class="receipt-header-center">
+                    <h3>hóa đơn bán lẻ</h3>
+                    <div class="sub-title">GHI NHẬN AI ĐẲNG CẤP HƠN</div>
+                    <div class="date-stamp" id="receiptDateLabel">NGÀY: --/--/----</div>
+                </div>
+                
+                <div class="receipt-dashed-divider"></div>
+                
+                <div class="receipt-data-table">
+                    <div class="receipt-data-row">
+                        <span>thời lượng học tích lũy:</span>
+                        <strong id="receiptAccumulatedHours">0.0 giờ</strong>
+                    </div>
+                    <div class="receipt-data-row">
+                        <span>phiên đã xong:</span>
+                        <strong id="receiptFinishedSessions">0 phiên</strong>
+                    </div>
+                    <div class="receipt-data-row">
+                        <span>chuỗi ngày liên tiếp 🔥 :</span>
+                        <strong id="receiptStreakDays">0 ngày</strong>
+                    </div>
+                </div>
+                
+                <div class="receipt-dashed-divider"></div>
+                
+                <div class="receipt-details-title">CHI TIẾT NHIỆM VỤ ĐÃ HOÀN THÀNH:</div>
+                <table class="receipt-data-table">
+                    <thead>
+                        <tr class="receipt-data-row" style="border-bottom: 1px solid #CBD5E1; padding-bottom: 4px; font-size: 0.75rem; font-weight: 800; color: #64748B;">
+                            <th style="text-align: left; width: 70%;">NHIỆM VỤ</th>
+                            <th style="text-align: right; width: 30%;">THỜI GIAN ĐÃ HỌC</th>
+                        </tr>
+                    </thead>
+                    <tbody id="receiptTableContentBody"></tbody>
+                </table>
+                
+                <div class="receipt-dashed-divider"></div>
+                
+                <div class="receipt-quote-footer">
+                    "đừng tin vào người khác. con người phải tin vào chính mình - esh"
+                </div>
+                
+                <div class="receipt-barcode-zone">
+                    <div style="width: 3px;"></div> <div style="width: 1px;"></div>
+                    <div style="width: 5px;"></div> <div style="width: 2px;"></div>
+                    <div style="width: 1px;"></div> <div style="width: 4px;"></div>
+                    <div style="width: 2px;"></div> <div style="width: 5px;"></div>
+                    <div style="width: 1px;"></div> <div style="width: 3px;"></div>
+                    <div style="width: 4px;"></div> <div style="width: 1px;"></div>
+                </div>
+                <div class="barcode-text">study-zone-2026</div>
+                
+                <button class="btn-download-receipt" data-html2canvas-ignore="true" onclick="downloadReceiptAsJpgFile()">
+                    📸 tải ảnh hóa đơn hôm nay
+                </button>
+            </section>
+
+            <section class="glass-card">
+                <h3 style="font-size: 1.1rem; font-weight: 850; margin-bottom: 1.2rem; color: #8CC1E9; opacity: 0.8;">thống kê thời gian học trong 1 tuần</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="val" id="boxToday">0m</div>
+                        <div class="lbl">hôm nay</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="val" id="boxWeek">0m</div>
+                        <div class="lbl">tuần này</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="val alert-color" id="boxStreak">0 🔥</div>
+                        <div class="lbl">chuỗi ngày</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="val" id="boxTotal">0h</div>
+                        <div class="lbl">tổng giờ</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="val" id="boxAvg">0m</div>
+                        <div class="lbl">trung bình</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="val" id="boxDone">0</div>
+                        <div class="lbl">đã xong</div>
+                    </div>
+                </div>
+
+                <div class="chart-box-wrapper">
+                    <svg id="weeklySvgChart" width="100%" height="100%" viewBox="0 0 420 150" preserveAspectRatio="none"></svg>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div class="toast-popup" id="toastNotifier">thông báo hệ thống</div>
+
+    <script>
+        let taskCollection = JSON.parse(localStorage.getItem("sz_final_tasks")) || [];
+        let analyticsLogs = JSON.parse(localStorage.getItem("sz_final_logs")) || {};
+        
+        let runtimeSeconds = 0;
+        let activeTaskId = localStorage.getItem("sz_final_active_id") || null;
+        let timerThread = null;
+        let dragSourceItem = null;
+
+        let localEditingTaskId = null;
+        let localInjectingTimeTaskId = null;
+
+        function renderHeaderLiveDate() {
+            const weekdays = ["chủ nhật", "thứ hai", "thứ ba", "thứ tư", "thứ năm", "thứ sáu", "thứ bảy"];
+            const now = new Date();
+            const currentDayName = weekdays[now.getDay()];
+            const day = now.getDate().toString().padStart(2, '0');
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const year = now.getFullYear();
+            
+            document.getElementById("headerLiveDateDisplay").innerText = `${currentDayName}, ${day}/${month}/${year}`;
+        }
+
+        function toggleSyncDropdownMenu(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById("syncDropdownContainer");
+            dropdown.classList.toggle("show");
+        }
+
+        document.addEventListener("click", function() {
+            const dropdown = document.getElementById("syncDropdownContainer");
+            if (dropdown) dropdown.classList.remove("show");
+        });
+
+        function executeDirectBackupSync() {
+            const inputVal = document.getElementById("directBackupInput").value.trim();
+            const labelText = document.getElementById("syncCapsuleLabelText");
+            
+            if (inputVal.length === 8 && /^\d{8}$/.test(inputVal)) {
+                localStorage.setItem("sz_backup_code", inputVal);
+                labelText.innerText = "đang đồng bộ";
+                triggerToast(`🔗 đã kết nối & đồng bộ mã sao lưu: ${inputVal}`);
+            } else {
+                labelText.innerText = "mã sao lưu 8 số";
+                if (inputVal.length > 0 && !/^\d+$/.test(inputVal)) {
+                    triggerToast("⚠️ mã sao lưu chỉ được chứa các chữ số!");
+                }
+            }
+        }
+
+        /* LOGIC TỰ ĐỘNG SẢN SINH MÃ 8 SỐ NGẪU NHIÊN */
+        function generateRandomBackupCode() {
+            const codeString = Math.floor(10000000 + Math.random() * 90000000).toString();
+            document.getElementById("directBackupInput").value = codeString;
+            executeDirectBackupSync();
+        }
+
+        document.getElementById("mainTodoInput").addEventListener("paste", function(e) {
+            const pastedData = (e.clipboardData || window.clipboardData).getData('text');
+            if (!pastedData) return;
+            
+            const lines = pastedData.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
+
+            if (lines.length > 1) {
+                e.preventDefault(); 
+                
+                if (confirm(`bạn có chắc chắn muốn dán ${lines.length} nhiệm vụ vào không?`)) {
+                    let addedCount = 0;
+                    lines.forEach(cleanedText => {
+                        taskCollection.push({
+                            id: "tk_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5),
+                            text: cleanedText,
+                            completed: false,
+                            secondsTracked: 0
+                        });
+                        addedCount++;
+                    });
+
+                    if (addedCount > 0) {
+                        saveTasksState();
+                        renderTodoWorkspace();
+                        updateReceiptWorkspace();
+                        triggerToast(`🎉 tự động thêm thành công ${addedCount} nhiệm vụ!`);
+                        this.value = "";
+                    }
+                }
+            }
+        });
+
+        function triggerToast(msg) {
+            const toast = document.getElementById("toastNotifier");
+            toast.innerText = msg;
+            toast.style.display = "block";
+            setTimeout(() => { toast.style.display = "none"; }, 3000);
+        }
+
+        function formatReadableDuration(totalSeconds) {
+            const h = Math.floor(totalSeconds / 3600);
+            const m = Math.floor((totalSeconds % 3600) / 60);
+            const s = totalSeconds % 60;
+            return `${h}h ${m}m ${s}s`;
+        }
+
+        function updateTimerUI() {
+            document.getElementById("mainTimeDisplay").innerText = formatReadableDuration(runtimeSeconds);
+        }
+
+        function toggleTimerCore() {
+            if (!activeTaskId) {
+                triggerToast("⚠️ vui lòng chọn một nhiệm vụ dưới danh sách trước khi đếm giờ!");
+                return;
+            }
+            const btn = document.getElementById("btnToggleTimer");
+            if (timerThread) {
+                clearInterval(timerThread);
+                timerThread = null;
+                btn.innerHTML = `<svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> bắt đầu`;
+                triggerToast("⏸️ đã tạm dừng phiên đếm giờ.");
+            } else {
+                btn.innerHTML = `<svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg> tạm dừng`;
+                timerThread = setInterval(() => {
+                    runtimeSeconds++;
+                    updateTimerUI();
+                    accumulateTaskProgress(activeTaskId, 1);
+                }, 1000);
+                triggerToast("🚀 hệ thống bắt đầu đo đạc thời gian tập trung.");
+            }
+        }
+
+        function resetTimerCore() {
+            if (timerThread) {
+                clearInterval(timerThread);
+                timerThread = null;
+            }
+            runtimeSeconds = 0;
+            updateTimerUI();
+            document.getElementById("btnToggleTimer").innerHTML = `<svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> bắt đầu`;
+            triggerToast("🔄 đồng hồ đo thời gian đã được đặt về mốc không.");
+        }
+
+        function accumulateTaskProgress(id, secs) {
+            taskCollection = taskCollection.map(t => {
+                if (t.id === id) t.secondsTracked += secs;
+                return t;
+            });
+            saveTasksState();
+            
+            const todayStr = getLocalDateKey();
+            if (!analyticsLogs[todayStr]) analyticsLogs[todayStr] = { minutes: 0, taskMap: {} };
+            
+            if (runtimeSeconds % 60 === 0) {
+                analyticsLogs[todayStr].minutes += 1;
+                localStorage.setItem("sz_final_logs", JSON.stringify(analyticsLogs));
+                updateDashboardStatistics();
+                renderWeeklyBarChart();
+            }
+            
+            const label = document.getElementById(`timeLabel_${id}`);
+            if (label) {
+                const target = taskCollection.find(t => t.id === id);
+                label.innerText = formatReadableDuration(target.secondsTracked);
+            }
+            updateReceiptWorkspace();
+        }
+
+        function saveTasksState() {
+            localStorage.setItem("sz_final_tasks", JSON.stringify(taskCollection));
+        }
+
+        function interceptTodoInputKey(e) {
+            if (e.key === "Enter") {
+                const input = document.getElementById("mainTodoInput");
+                const text = input.value.trim();
+                if (!text) return;
+                
+                taskCollection.push({
+                    id: "tk_" + Date.now(),
+                    text: text,
+                    completed: false,
+                    secondsTracked: 0
+                });
+                saveTasksState();
+                input.value = "";
+                renderTodoWorkspace();
+                updateReceiptWorkspace();
+                triggerToast("✨ thêm nhiệm vụ mới thành công.");
+            }
+        }
+
+        function switchActiveTask(id, event) {
+            if (event && (event.target.tagName === 'INPUT' || event.target.tagName === 'BUTTON')) {
+                return;
+            }
+            const t = taskCollection.find(tk => tk.id === id);
+            if (t && t.completed) {
+                triggerToast("⚠️ nhiệm vụ này đã xong, không thể chạy đếm giờ!");
+                return;
+            }
+            if (activeTaskId === id) {
+                activeTaskId = null;
+                localStorage.removeItem("sz_final_active_id");
+                if (timerThread) toggleTimerCore();
+            } else {
+                activeTaskId = id;
+                localStorage.setItem("sz_final_active_id", id);
+            }
+            renderTodoWorkspace();
+            resetTimerCore();
+        }
+
+        function toggleCheckTaskState(id, e) {
+            e.stopPropagation();
+            taskCollection = taskCollection.map(t => {
+                if (t.id === id) {
+                    const nextState = !t.completed;
+                    if (nextState && activeTaskId === id) {
+                        activeTaskId = null;
+                        localStorage.removeItem("sz_final_active_id");
+                        resetTimerCore();
+                    }
+                    return { ...t, completed: nextState };
+                }
+                return t;
+            });
+            saveTasksState();
+            renderTodoWorkspace();
+            updateDashboardStatistics();
+            updateReceiptWorkspace();
+        }
+
+        function enableInlineEditing(id, e) {
+            e.stopPropagation();
+            localEditingTaskId = id;
+            renderTodoWorkspace();
+            const inputField = document.getElementById(`inlineInput_${id}`);
+            if (inputField) {
+                inputField.focus();
+                inputField.select();
+            }
+        }
+
+        function handleInlineEditKey(e, id) {
+            if (e.key === "Enter") {
+                finishInlineEditing(id);
+            } else if (e.key === "Escape") {
+                localEditingTaskId = null;
+                renderTodoWorkspace();
+            }
+        }
+
+        function finishInlineEditing(id) {
+            const inputField = document.getElementById(`inlineInput_${id}`);
+            if (inputField) {
+                const newText = inputField.value.trim();
+                if (newText) {
+                    taskCollection = taskCollection.map(t => {
+                        if (t.id === id) t.text = newText;
+                        return t;
+                    });
+                    saveTasksState();
+                    updateReceiptWorkspace();
+                }
+            }
+            localEditingTaskId = null;
+            renderTodoWorkspace();
+        }
+
+        function enableInlineTimeInject(id, e) {
+            e.stopPropagation();
+            localInjectingTimeTaskId = id;
+            renderTodoWorkspace();
+            const timeInput = document.getElementById(`inlineMins_${id}`);
+            if (timeInput) {
+                timeInput.focus();
+                timeInput.select();
+            }
+        }
+
+        function handleInlineTimeKey(e, id) {
+            if (e.key === "Enter") {
+                finishInlineTimeInject(id);
+            } else if (e.key === "Escape") {
+                localInjectingTimeTaskId = null;
+                renderTodoWorkspace();
+            }
+        }
+
+        function finishInlineTimeInject(id) {
+            const minsInput = document.getElementById(`inlineMins_${id}`);
+            const secsInput = document.getElementById(`inlineSecs_${id}`);
+            if (minsInput && secsInput) {
+                const targetMins = parseInt(minsInput.value) || 0;
+                const targetSecs = parseInt(secsInput.value) || 0;
+                
+                if (targetMins >= 0 && targetSecs >= 0) {
+                    const totalTargetSeconds = (targetMins * 60) + targetSecs;
+                    const targetTask = taskCollection.find(t => t.id === id);
+                    
+                    if (targetTask) {
+                        const previousSeconds = targetTask.secondsTracked;
+                        const secondDifference = totalTargetSeconds - previousSeconds;
+                        const minuteDifference = secondDifference / 60;
+
+                        targetTask.secondsTracked = totalTargetSeconds;
+                        saveTasksState();
+
+                        const todayStr = getLocalDateKey();
+                        if (!analyticsLogs[todayStr]) analyticsLogs[todayStr] = { minutes: 0, taskMap: {} };
+                        
+                        analyticsLogs[todayStr].minutes = Math.max(0, Math.round((analyticsLogs[todayStr].minutes + minuteDifference) * 100) / 100);
+                        localStorage.setItem("sz_final_logs", JSON.stringify(analyticsLogs));
+
+                        updateDashboardStatistics();
+                        renderWeeklyBarChart();
+                        updateReceiptWorkspace();
+                        triggerToast(`⏱️ đã cập nhật thời gian thành ${targetMins}m ${targetSecs}s.`);
+                    }
+                }
+            }
+            localInjectingTimeTaskId = null;
+            renderTodoWorkspace();
+        }
+
+        function purgeSingleTask(id, e) {
+            e.stopPropagation();
+            if (activeTaskId === id) {
+                activeTaskId = null;
+                localStorage.removeItem("sz_final_active_id");
+                resetTimerCore();
+            }
+            taskCollection = taskCollection.filter(t => t.id !== id);
+            saveTasksState();
+            renderTodoWorkspace();
+            updateReceiptWorkspace();
+            triggerToast("🗑️ đã loại bỏ nhiệm vụ.");
+        }
+
+        function wipeAllTasks() {
+            if (confirm("bạn có thực sự muốn xóa toàn bộ danh sách nhiệm vụ hôm nay?")) {
+                taskCollection = [];
+                activeTaskId = null;
+                localStorage.removeItem("sz_final_active_id");
+                resetTimerCore();
+                saveTasksState();
+                renderTodoWorkspace();
+                updateReceiptWorkspace();
+                triggerToast("🗑️ danh sách nhiệm vụ đã trống rỗng.");
+            }
+        }
+
+        function bindDragDropInterfaces(rowElement) {
+            rowElement.addEventListener("dragstart", (e) => {
+                dragSourceItem = rowElement;
+                rowElement.style.opacity = "0.4";
+            });
+            rowElement.addEventListener("dragend", () => {
+                dragSourceItem = null;
+                rowElement.style.opacity = "1";
+            });
+            rowElement.addEventListener("dragover", (e) => { e.preventDefault(); });
+            rowElement.addEventListener("drop", (e) => {
+                e.preventDefault();
+                if (dragSourceItem !== rowElement) {
+                    const listChildren = Array.from(document.getElementById("todoListViewport").children);
+                    const sourceIdx = listChildren.indexOf(dragSourceItem);
+                    const targetIdx = listChildren.indexOf(rowElement);
+                    
+                    const movedObj = taskCollection.splice(sourceIdx, 1)[0];
+                    taskCollection.splice(targetIdx, 0, movedObj);
+                    
+                    saveTasksState();
+                    renderTodoWorkspace();
+                    updateReceiptWorkspace();
+                }
+            });
+        }
+
+        function renderTodoWorkspace() {
+            const viewport = document.getElementById("todoListViewport");
+            viewport.innerHTML = "";
+            document.getElementById("taskCounterBadge").innerText = `(${taskCollection.length} nhiệm vụ)`;
+
+            if (taskCollection.length === 0) {
+                viewport.innerHTML = `<div style="text-align: center; color: #8CC1E9; opacity: 0.6; font-size: 0.85rem; padding: 2.5rem 0;">chưa có dữ liệu nhiệm vụ cho hôm nay</div>`;
+                return;
+            }
+
+            taskCollection.forEach(t => {
+                const li = document.createElement("li");
+                li.className = `todo-row-item ${t.completed ? 'done-state' : ''} ${activeTaskId === t.id ? 'active-running' : ''}`;
+                li.draggable = true;
+                li.onclick = (e) => switchActiveTask(t.id, e);
+                bindDragDropInterfaces(li);
+
+                let nameBlock = `<span class="todo-title-txt">${escapeMarkup(t.text)}</span>`;
+                if (localEditingTaskId === t.id) {
+                    nameBlock = `<input type="text" id="inlineInput_${t.id}" class="inline-edit-input" value="${escapeMarkup(t.text)}" onkeydown="handleInlineEditKey(event, '${t.id}')" onblur="finishInlineEditing('${t.id}')" onclick="event.stopPropagation()">`;
+                }
+
+                let timeActionBlock = `
+                    <button class="manual-time-trigger" title="chỉnh sửa thời gian học thủ công" onclick="enableInlineTimeInject('${t.id}', event)">
+                        ⏱️+
+                    </button>`;
+                if (localInjectingTimeTaskId === t.id) {
+                    const currentMins = Math.floor(t.secondsTracked / 60);
+                    const currentSecs = t.secondsTracked % 60;
+                    timeActionBlock = `
+                        <div style="display:flex; align-items:center; gap:2px;" onclick="event.stopPropagation()">
+                            <input type="number" id="inlineMins_${t.id}" class="inline-time-input" style="width:42px; padding: 2px 4px;" placeholder="m" min="0" value="${currentMins}" onkeydown="handleInlineTimeKey(event, '${t.id}')">
+                            <span style="font-size:0.75rem; color:var(--clear-skies);">m</span>
+                            <input type="number" id="inlineSecs_${t.id}" class="inline-time-input" style="width:38px; padding: 2px 4px;" placeholder="s" min="0" max="59" value="${currentSecs}" onkeydown="handleInlineTimeKey(event, '${t.id}')">
+                            <span style="font-size:0.75rem; color:var(--clear-skies);">s</span>
+                            <button onclick="finishInlineTimeInject('${t.id}')" style="background:transparent; border:none; color:#10B981; font-weight:900; cursor:pointer; padding:2px 2px;">✓</button>
+                        </div>`;
+                }
+
+                li.innerHTML = `
+                    <div class="todo-item-core">
+                        <div class="todo-drag-pin">⋮⋮</div>
+                        <div class="todo-square-box ${t.completed ? 'checked-fill' : ''}" onclick="toggleCheckTaskState('${t.id}', event)">
+                            ${t.completed ? '✓' : ''}
+                        </div>
+                        <div class="todo-content-block">
+                            ${nameBlock}
+                            <div class="todo-time-ticker">
+                                <span id="timeLabel_${t.id}">${formatReadableDuration(t.secondsTracked)}</span>
+                                ${activeTaskId === t.id ? '<span class="ticker-active-badge">đang đếm</span>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="todo-row-actions">
+                        ${timeActionBlock}
+                        <button class="todo-inline-btn" title="chỉnh sửa" onclick="enableInlineEditing('${t.id}', event)">
+                            ✏️
+                        </button>
+                        <button class="todo-inline-btn delete-trash" title="xóa" onclick="purgeSingleTask('${t.id}', event)">
+                            🗑️
+                        </button>
+                    </div>
+                `;
+                viewport.appendChild(li);
+            });
+        }
+
+        function updateReceiptWorkspace() {
+            const todayStr = getLocalDateKey();
+            const parts = todayStr.split('-');
+            document.getElementById("receiptDateLabel").innerText = `NGÀY: ${parts[2]}/${parts[1]}/${parts[0]}`;
+            
+            let totalSecondsAccumulated = 0;
+            taskCollection.forEach(t => totalSecondsAccumulated += t.secondsTracked);
+            const computedHours = (totalSecondsAccumulated / 3600).toFixed(1);
+            
+            let completedSessions = taskCollection.filter(t => t.completed).length;
+
+            document.getElementById("receiptAccumulatedHours").innerText = `${computedHours} giờ`;
+            document.getElementById("receiptFinishedSessions").innerText = `${completedSessions} phiên`;
+            
+            let streak = 0;
+            let check = new Date();
+            while(true) {
+                const key = getLocalDateKey(check);
+                if (analyticsLogs[key] && analyticsLogs[key].minutes > 0) {
+                    streak++;
+                    check.setDate(check.getDate() - 1);
+                } else {
+                    if (streak === 0) {
+                        const yesterday = new Date();
+                        yesterday.setDate(yesterday.getDate() - 1);
+                        if (analyticsLogs[getLocalDateKey(yesterday)]?.minutes > 0) {
+                            check.setDate(check.getDate() - 1);
+                            continue;
+                        }
+                    }
+                    break;
+                }
+            }
+            document.getElementById("receiptStreakDays").innerText = `${streak} ngày`;
+
+            const tbody = document.getElementById("receiptTableContentBody");
+            tbody.innerHTML = "";
+
+            const completedTaskCollection = taskCollection.filter(t => t.completed);
+
+            if (completedTaskCollection.length === 0) {
+                tbody.innerHTML = `
+                    <tr class="receipt-data-row">
+                        <td colspan="2" style="text-align: center; color: #64748B; font-size: 0.85rem; padding: 1.2rem 0; font-style: italic;">(chưa có nhiệm vụ nào hoàn thành)</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            completedTaskCollection.forEach(t => {
+                const tr = document.createElement("tr");
+                tr.className = "receipt-data-row";
+                tr.style.borderBottom = "1px dashed #E2E8F0";
+                
+                tr.innerHTML = `
+                    <td style="text-align: left; width: 70%; padding: 0.6rem 0; font-weight: 700; color: #1E293B; word-break: break-all;">${escapeMarkup(t.text)} (✓)</td>
+                    <td style="text-align: right; width: 30%; padding: 0.6rem 0; font-weight: 700; color: #0F172A; font-variant-numeric: tabular-nums;">${formatReadableDuration(t.secondsTracked)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function downloadReceiptAsJpgFile() {
+            const receiptArea = document.getElementById("receiptVisualPrintZone");
+            const renderingOptions = {
+                scale: 2.5,
+                backgroundColor: "#FFFDF5",
+                useCORS: true,
+                logging: false
+            };
+
+            triggerToast("⏳ hệ thống đang xử lý ảnh hóa đơn độ nét cao...");
+
+            html2canvas(receiptArea, renderingOptions).then(canvas => {
+                const fileLink = document.createElement("a");
+                fileLink.download = `receipt_${getLocalDateKey()}.jpg`;
+                fileLink.href = canvas.toDataURL("image/jpeg", 0.95);
+                fileLink.click();
+                triggerToast("📸 hóa đơn bán lẻ đã tải xuống thành công!");
+            }).catch(err => {
+                console.error(err);
+                triggerToast("❌ lỗi xử lý kết xuất đồ họa html2canvas.");
+            });
+        }
+
+        function triggerPolaroidUpload() {
+            document.getElementById("hiddenFileUploader").click();
+        }
+
+        function executeSmartImageCompress(event) {
+            const rawFile = event.target.files[0];
+            if (!rawFile) return;
+
+            const loadingIndicator = document.getElementById("polaroidLoadingState");
+            if (loadingIndicator) {
+                loadingIndicator.innerHTML = "<span>⏳ đang nén & tối ưu hóa...</span>";
+            }
+
+            const fileReader = new FileReader();
+            fileReader.onload = function(e) {
+                const coreImage = new Image();
+                coreImage.onload = function() {
+                    const BOUNDING_LIMIT = 1200;
+                    let targetWidth = coreImage.width;
+                    let targetHeight = coreImage.height;
+
+                    if (targetWidth > targetHeight) {
+                        if (targetWidth > BOUNDING_LIMIT) {
+                            targetHeight *= BOUNDING_LIMIT / targetWidth;
+                            targetWidth = BOUNDING_LIMIT;
+                        }
+                    } else {
+                        if (targetHeight > BOUNDING_LIMIT) {
+                            targetWidth *= BOUNDING_LIMIT / targetHeight;
+                            targetHeight = BOUNDING_LIMIT;
+                        }
+                    }
+
+                    const internalCanvas = document.createElement("canvas");
+                    internalCanvas.width = targetWidth;
+                    internalCanvas.height = targetHeight;
+                    const graphicContext = internalCanvas.getContext("2d");
+                    graphicContext.drawImage(coreImage, 0, 0, targetWidth, targetHeight);
+
+                    const fullyCompressedBase64 = internalCanvas.toDataURL("image/jpeg", 0.75);
+
+                    try {
+                        localStorage.setItem("sz_final_polaroid_img", fullyCompressedBase64);
+                        const element = document.getElementById("polaroidImgRender");
+                        if (element) {
+                            element.src = fullyCompressedBase64;
+                            element.style.display = "block";
+                        }
+                        if (loadingIndicator) loadingIndicator.style.display = "none";
+                        triggerToast("🎉 ảnh kích thước lớn đã được tối ưu hóa mượt mà!");
+                    } catch (error) {
+                        console.error(error);
+                        triggerToast("❌ dung lượng bộ đệm quá giới hạn. vui lòng thử ảnh nhẹ hơn!");
+                        rebuildPolaroidPlaceholder();
+                    }
+                };
+                coreImage.onerror = function() {
+                    triggerToast("❌ tệp ảnh lỗi hoặc sai định dạng kỹ thuật.");
+                    rebuildPolaroidPlaceholder();
+                };
+                coreImage.src = e.target.result;
+            };
+            fileReader.readAsDataURL(rawFile);
+        }
+
+        function rebuildPolaroidPlaceholder() {
+            const indicator = document.getElementById("polaroidLoadingState");
+            if (indicator) {
+                indicator.innerHTML = `
+                    <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <span style="margin-top: 6px;">nhấp để tải lên hình ảnh</span>
+                `;
+            }
+        }
+
+        function savePolaroidCaption() {
+            localStorage.setItem("sz_final_polaroid_caption", document.getElementById("polaroidCaptionInput").value);
+        }
+
+        function syncNotesToStorage() {
+            localStorage.setItem("sz_final_notes", document.getElementById("quickNotesField").value);
+        }
+
+        function updateDashboardStatistics() {
+            const currentDayStr = getLocalDateKey();
+            
+            const dayMins = analyticsLogs[currentDayStr] ? analyticsLogs[currentDayStr].minutes : 0;
+            document.getElementById("boxToday").innerText = `${Math.round(dayMins)}m`;
+
+            let aggregatedWeekMins = 0;
+            const pivot = new Date();
+            for(let i = 0; i < 7; i++) {
+                const target = new Date(pivot);
+                target.setDate(pivot.getDate() - i);
+                const str = getLocalDateKey(target);
+                if (analyticsLogs[str]) aggregatedWeekMins += analyticsLogs[str].minutes;
+            }
+            document.getElementById("boxWeek").innerText = `${Math.round(aggregatedWeekMins)}m`;
+
+            let aggregateAllTimeMins = 0;
+            Object.keys(analyticsLogs).forEach(k => aggregateAllTimeMins += analyticsLogs[k].minutes);
+            document.getElementById("boxTotal").innerText = `${(aggregateAllTimeMins / 60).toFixed(1)}h`;
+            
+            let finishedCount = taskCollection.filter(t => t.completed).length;
+            document.getElementById("boxDone").innerText = finishedCount;
+            
+            document.getElementById("boxAvg").innerText = `${Math.round(aggregateAllTimeMins / Math.max(Object.keys(analyticsLogs).length, 1))}m`;
+            
+            let streakCounter = 0;
+            let checkDate = new Date();
+            while(true) {
+                const key = getLocalDateKey(checkDate);
+                if (analyticsLogs[key] && analyticsLogs[key].minutes > 0) {
+                    streakCounter++;
+                    checkDate.setDate(checkDate.getDate() - 1);
+                } else {
+                    if (streakCounter === 0) {
+                        const yest = new Date();
+                        yest.setDate(yest.getDate() - 1);
+                        if (analyticsLogs[getLocalDateKey(yest)]?.minutes > 0) {
+                            checkDate.setDate(checkDate.getDate() - 1);
+                            continue;
+                        }
+                    }
+                    break;
+                }
+            }
+            document.getElementById("boxStreak").innerText = `${streakCounter} 🔥`;
+        }
+
+        function renderWeeklyBarChart() {
+            const svgElement = document.getElementById("weeklySvgChart");
+            svgElement.innerHTML = "";
+
+            const weekdayTitles = ["thứ 2", "thứ 3", "thứ 4", "thứ 5", "thứ 6", "thứ 7", "chủ nhật"];
+            const currentCalendarDate = new Date();
+            
+            let dayPosition = currentCalendarDate.getDay();
+            let distanceToMonday = dayPosition === 0 ? -6 : 1 - dayPosition; 
+            
+            let mondayPivotDate = new Date(currentCalendarDate);
+            mondayPivotDate.setDate(currentCalendarDate.getDate() + distanceToMonday);
+
+            let calculatedWeekDataset = [];
+            for(let i = 0; i < 7; i++) {
+                const loopingDate = new Date(mondayPivotDate);
+                loopingDate.setDate(mondayPivotDate.getDate() + i);
+                const stringKey = getLocalDateKey(loopingDate);
+                
+                calculatedWeekDataset.push({
+                    dayName: weekdayTitles[i],
+                    durationMinutes: analyticsLogs[stringKey] ? analyticsLogs[stringKey].minutes : 0
+                });
+            }
+
+            const peakMinutes = Math.max(...calculatedWeekDataset.map(item => item.durationMinutes), 60);
+            const totalChartHeight = 110;
+            const visualColumnWidth = 38;
+            const spatialGap = 16;
+            const horizontalOriginX = 22;
+
+            calculatedWeekDataset.forEach((data, index) => {
+                const currentX = horizontalOriginX + index * (visualColumnWidth + spatialGap);
+                const calculatedBarHeight = (data.durationMinutes / peakMinutes) * totalChartHeight;
+                const currentY = totalChartHeight - calculatedBarHeight + 15;
+
+                const barNode = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                barNode.setAttribute("x", currentX);
+                barNode.setAttribute("y", currentY);
+                barNode.setAttribute("width", visualColumnWidth);
+                barNode.setAttribute("height", calculatedBarHeight);
+                barNode.setAttribute("rx", "5");
+                barNode.setAttribute("fill", data.durationMinutes > 0 ? "url(#neonSkyGradient)" : "rgba(255,255,255,0.06)");
+                svgElement.appendChild(barNode);
+
+                if (data.durationMinutes > 0) {
+                    const textValueNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    textValueNode.setAttribute("x", currentX + visualColumnWidth / 2);
+                    textValueNode.setAttribute("y", currentY - 5);
+                    textValueNode.setAttribute("text-anchor", "middle");
+                    textValueNode.setAttribute("fill", "#8CC1E9");
+                    textValueNode.style.fontSize = "10px";
+                    textValueNode.style.fontWeight = "800";
+                    textValueNode.textContent = `${Math.round(data.durationMinutes)}m`;
+                    svgElement.appendChild(textValueNode);
+                }
+
+                const textLabelNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                textLabelNode.setAttribute("x", currentX + visualColumnWidth / 2);
+                textLabelNode.setAttribute("y", totalChartHeight + 30);
+                textLabelNode.setAttribute("text-anchor", "middle");
+                textLabelNode.setAttribute("fill", "#8CC1E9");
+                textLabelNode.style.opacity = "0.6";
+                textLabelNode.style.fontSize = "11px";
+                textLabelNode.style.fontWeight = "700";
+                textLabelNode.textContent = data.dayName;
+                svgElement.appendChild(textLabelNode);
+            });
+
+            const definitionNode = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+            definitionNode.innerHTML = `
+                <linearGradient id="neonSkyGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#8CC1E9" />
+                    <stop offset="100%" stop-color="#0055A0" />
+                </linearGradient>
+            `;
+            svgElement.appendChild(definitionNode);
+        }
+
+        function getLocalDateKey(dateObject = new Date()) {
+            const y = dateObject.getFullYear();
+            const m = (dateObject.getMonth() + 1).toString().padStart(2, '0');
+            const d = dateObject.getDate().toString().padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+
+        function escapeMarkup(rawString) {
+            return rawString
+                .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        function executeBootstrappingSequence() {
+            renderHeaderLiveDate(); 
+            renderTodoWorkspace();
+            updateTimerUI();
+            updateDashboardStatistics();
+            renderWeeklyBarChart();
+            updateReceiptWorkspace();
+
+            const rawImg = localStorage.getItem("sz_final_polaroid_img");
+            if (rawImg) {
+                const view = document.getElementById("polaroidImgRender");
+                const ldr = document.getElementById("polaroidLoadingState");
+                if (view) { view.src = rawImg; view.style.display = "block"; }
+                if (ldr) ldr.style.display = "none";
+            }
+
+            document.getElementById("polaroidCaptionInput").value = localStorage.getItem("sz_final_polaroid_caption") || "";
+            document.getElementById("quickNotesField").value = localStorage.getItem("sz_final_notes") || "";
+            
+            const currentCode = localStorage.getItem("sz_backup_code");
+            if (currentCode) {
+                document.getElementById("directBackupInput").value = currentCode;
+                document.getElementById("syncCapsuleLabelText").innerText = "đang đồng bộ";
+            }
+        }
+
+        window.onload = executeBootstrappingSequence;
+    </script>
+</body>
+</html>
