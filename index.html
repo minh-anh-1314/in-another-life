@@ -128,23 +128,23 @@
             background: rgba(140, 193, 233, 0.1);
         }
 
-        /* MENU THẢ XUỐNG KHI CLICK VÀO CỤC ĐỒNG BỘ */
+        /* MENU THẢ XUỐNG ĐƯỢC MỞ RỘNG ĐỂ QUẢN LÝ ĐỒNG BỘ & XOÁ HỆ THỐNG */
         .sync-dropdown {
             position: absolute;
             top: 105%;
             right: 0;
-            width: 240px;
-            background: rgba(14, 30, 58, 0.95);
+            width: 280px;
+            background: rgba(14, 30, 58, 0.98);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             border: 1.5px solid var(--glass-border);
             border-radius: 16px;
-            padding: 1rem;
+            padding: 1.2rem;
             box-shadow: var(--glass-shadow);
             display: none;
             z-index: 100;
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 0.65rem;
         }
 
         .sync-dropdown.show {
@@ -409,7 +409,6 @@
             border-color: var(--clear-skies);
         }
 
-        /* INPUT EDIT SỬA TÊN NGAY TRÊN DÒNG */
         .inline-edit-input {
             background: rgba(0, 0, 0, 0.4) !important;
             border: 1px solid var(--clear-skies) !important;
@@ -423,7 +422,6 @@
             text-transform: none !important;
         }
 
-        /* INPUT PHÚT/GIÂY CỘNG THÊM NGAY TRÊN DÒNG */
         .inline-time-input {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid var(--clear-skies);
@@ -754,7 +752,7 @@
             background: #1E293B;
         }
 
-        /* NÂNG CẤP KHÔNG GIAN BẢNG THỐNG KÊ RỘNG RÃI TOÀN DIỆN */
+        /* KHÔNG GIAN BẢNG THỐNG KÊ */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -793,10 +791,69 @@
             letter-spacing: 0.04em;
         }
 
+        /* FIX: BIỂU ĐỒ CHUẨN HOÁ KHÔNG BỊ BÓP MÉO */
         .chart-box-wrapper {
             width: 100%;
-            height: 170px;
-            margin-top: 2rem;
+            height: 180px;
+            margin-top: 1.5rem;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 16px;
+            padding: 1rem;
+            border: 1px solid rgba(255,255,255,0.03);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #weeklySvgChart {
+            width: 100%;
+            height: 100%;
+            max-width: 460px;
+        }
+
+        .dropdown-action-btn {
+            background: var(--blueberry);
+            border: none;
+            color: var(--clouds);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+        .dropdown-action-btn:hover {
+            background: var(--bluebird);
+        }
+
+        .dropdown-danger-btn {
+            background: rgba(244, 63, 94, 0.15);
+            border: 1px solid rgba(244, 63, 94, 0.4);
+            color: var(--accent-warm);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 4px;
+        }
+        .dropdown-danger-btn:hover {
+            background: var(--accent-warm);
+            color: var(--clouds);
+        }
+
+        .sync-notice-lbl {
+            font-size: 0.65rem;
+            color: var(--clear-skies);
+            opacity: 0.6;
+            line-height: 1.3;
+            margin-bottom: 4px;
+            text-transform: none !important;
         }
 
         .toast-popup {
@@ -835,7 +892,18 @@
             <div class="sync-dropdown" id="syncDropdownContainer" onclick="event.stopPropagation()">
                 <div style="font-size: 0.8rem; color: var(--clear-skies); font-weight: 800; margin-bottom: 2px;">cấu hình mã sao lưu</div>
                 <input type="text" id="directBackupInput" class="backup-input-field" placeholder="nhập 8 số..." maxlength="8" oninput="executeDirectBackupSync()">
-                <button onclick="generateRandomBackupCode()" style="background: rgba(255,255,255,0.08); border: 1px dashed var(--glass-border); color: var(--clear-skies); padding: 5px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; cursor: pointer; margin-top: 4px; width: 100%;">🎲 tạo mã ngẫu nhiên</button>
+                
+                <button onclick="generateRandomBackupCode()" style="background: rgba(255,255,255,0.08); border: 1px dashed var(--glass-border); color: var(--clear-skies); padding: 5px; border-radius: 6px; font-size: 0.75rem; font-weight: 800; cursor: pointer; margin-top: 2px; width: 100%;">🎲 tạo mã ngẫu nhiên</button>
+                
+                <div style="border-top: 1px dashed rgba(140, 193, 233, 0.2); margin: 6px 0;"></div>
+                
+                <div class="sync-notice-lbl">💡 bản offline lưu tại trình duyệt này. để chuyển tiến trình sang thiết bị khác, sử dụng tính năng xuất/nhập chuỗi:</div>
+                <button class="dropdown-action-btn" onclick="exportDataBundleToClipboard()">📤 xuất chuỗi sao lưu</button>
+                <button class="dropdown-action-btn" style="margin-top: 4px;" onclick="importDataBundleFromText()">📥 nhập chuỗi dữ liệu</button>
+                
+                <div style="border-top: 1px dashed rgba(140, 193, 233, 0.2); margin: 6px 0;"></div>
+                
+                <button class="dropdown-danger-btn" onclick="wipeAllSystemDataClean()">🗑️ xóa sạch mọi dữ liệu (reset)</button>
             </div>
         </div>
     </header>
@@ -981,7 +1049,7 @@
                 </div>
 
                 <div class="chart-box-wrapper">
-                    <svg id="weeklySvgChart" width="100%" height="100%" viewBox="0 0 420 150" preserveAspectRatio="none"></svg>
+                    <svg id="weeklySvgChart" viewBox="0 0 420 150" preserveAspectRatio="xMidYMid meet"></svg>
                 </div>
             </section>
         </div>
@@ -1030,33 +1098,78 @@
             if (inputVal.length === 8 && /^\d{8}$/.test(inputVal)) {
                 localStorage.setItem("sz_backup_code", inputVal);
                 labelText.innerText = "đang đồng bộ";
-                triggerToast(`🔗 đã kết nối & đồng bộ mã sao lưu: ${inputVal}`);
+                triggerToast(`🔗 đã cấu hình mã sao lưu: ${inputVal}`);
             } else {
                 labelText.innerText = "mã sao lưu 8 số";
-                if (inputVal.length > 0 && !/^\d+$/.test(inputVal)) {
-                    triggerToast("⚠️ mã sao lưu chỉ được chứa các chữ số!");
-                }
             }
         }
 
-        /* LOGIC TỰ ĐỘNG SẢN SINH MÃ 8 SỐ NGẪU NHIÊN */
         function generateRandomBackupCode() {
             const codeString = Math.floor(10000000 + Math.random() * 90000000).toString();
             document.getElementById("directBackupInput").value = codeString;
             executeDirectBackupSync();
         }
 
+        /* 📤 LOGIC XUẤT TOÀN BỘ DỮ LIỆU SANG THIẾT BỊ KHÁC VÌ KHÔNG CÓ SERVER LIVE */
+        function exportDataBundleToClipboard() {
+            const bundle = {
+                tasks: localStorage.getItem("sz_final_tasks"),
+                logs: localStorage.getItem("sz_final_logs"),
+                polaroid_img: localStorage.getItem("sz_final_polaroid_img"),
+                polaroid_caption: localStorage.getItem("sz_final_polaroid_caption"),
+                notes: localStorage.getItem("sz_final_notes"),
+                backup_code: localStorage.getItem("sz_backup_code")
+            };
+            const rawJson = JSON.stringify(bundle);
+            // Mã hóa base64 an toàn để người dùng dễ sao chép thành một chuỗi liền mạch
+            const encryptedString = btoa(unescape(encodeURIComponent(rawJson)));
+            
+            navigator.clipboard.writeText(encryptedString).then(() => {
+                triggerToast("📋 Đã sao chép chuỗi mã hóa sao lưu vào bộ nhớ tạm! Hãy dán mã này sang máy khác.");
+            }).catch(() => {
+                prompt("Hãy bôi đen và sao chép đoạn mã này để gửi sang thiết bị mới của bạn:", encryptedString);
+            });
+        }
+
+        /* 📥 LOGIC NHẬN DỮ LIỆU ĐỒNG BỘ TỪ THIẾT BỊ KHÁC */
+        function importDataBundleFromText() {
+            const base64Str = prompt("Dán chuỗi dữ liệu sao lưu (chuỗi ký tự dài) thu được từ thiết bị cũ vào đây:");
+            if (!base64Str) return;
+            try {
+                const decodedJson = decodeURIComponent(escape(atob(base64Str.trim())));
+                const bundle = JSON.parse(decodedJson);
+                
+                if (bundle.tasks) localStorage.setItem("sz_final_tasks", bundle.tasks);
+                if (bundle.logs) localStorage.setItem("sz_final_logs", bundle.logs);
+                if (bundle.polaroid_img) localStorage.setItem("sz_final_polaroid_img", bundle.polaroid_img);
+                if (bundle.polaroid_caption) localStorage.setItem("sz_final_polaroid_caption", bundle.polaroid_caption);
+                if (bundle.notes) localStorage.setItem("sz_final_notes", bundle.notes);
+                if (bundle.backup_code) localStorage.setItem("sz_backup_code", bundle.backup_code);
+                
+                triggerToast("🔄 Đồng bộ dữ liệu chéo thiết bị thành công! Đang tải lại trang...");
+                setTimeout(() => { location.reload(); }, 1200);
+            } catch (e) {
+                alert("❌ Đoạn chuỗi dữ liệu bạn nhập không hợp lệ hoặc bị thiếu cấu trúc!");
+            }
+        }
+
+        /* 🗑️ XOÁ SẠCH TOÀN BỘ DỮ LIỆU TRÊN TRÌNH DUYỆT THEO YÊU CẦU */
+        function wipeAllSystemDataClean() {
+            if (confirm("🚨 CẢNH BÁO NGUY HIỂM: Hành động này sẽ xóa vĩnh viễn TOÀN BỘ nhiệm vụ, chuỗi lịch sử học tập, ảnh Polaroid, ghi chú và các mã liên kết trên thiết bị này! Bạn có chắc chắn muốn làm sạch không?")) {
+                localStorage.clear();
+                triggerToast("💥 Hệ thống đã được định dạng và làm sạch hoàn toàn!");
+                setTimeout(() => { location.reload(); }, 1200);
+            }
+        }
+
         document.getElementById("mainTodoInput").addEventListener("paste", function(e) {
             const pastedData = (e.clipboardData || window.clipboardData).getData('text');
             if (!pastedData) return;
-            
             const lines = pastedData.split(/\r?\n/).map(line => line.trim()).filter(line => line.length > 0);
 
             if (lines.length > 1) {
                 e.preventDefault(); 
-                
                 if (confirm(`bạn có chắc chắn muốn dán ${lines.length} nhiệm vụ vào không?`)) {
-                    let addedCount = 0;
                     lines.forEach(cleanedText => {
                         taskCollection.push({
                             id: "tk_" + Date.now() + "_" + Math.random().toString(36).substr(2, 5),
@@ -1064,16 +1177,12 @@
                             completed: false,
                             secondsTracked: 0
                         });
-                        addedCount++;
                     });
-
-                    if (addedCount > 0) {
-                        saveTasksState();
-                        renderTodoWorkspace();
-                        updateReceiptWorkspace();
-                        triggerToast(`🎉 tự động thêm thành công ${addedCount} nhiệm vụ!`);
-                        this.value = "";
-                    }
+                    saveTasksState();
+                    renderTodoWorkspace();
+                    updateReceiptWorkspace();
+                    triggerToast(`🎉 tự động thêm thành công nhiệm vụ danh sách!`);
+                    this.value = "";
                 }
             }
         });
@@ -1304,7 +1413,7 @@
                         updateDashboardStatistics();
                         renderWeeklyBarChart();
                         updateReceiptWorkspace();
-                        triggerToast(`⏱️ đã cập nhật thời gian thành ${targetMins}m ${targetSecs}s.`);
+                        triggerToast(`⏱️ đã cập nhật thời gian.`);
                     }
                 }
             }
@@ -1514,7 +1623,7 @@
                 triggerToast("📸 hóa đơn bán lẻ đã tải xuống thành công!");
             }).catch(err => {
                 console.error(err);
-                triggerToast("❌ lỗi xử lý kết xuất đồ họa html2canvas.");
+                triggerToast("❌ lỗi xử lý kết xuất đồ họa.");
             });
         }
 
@@ -1567,7 +1676,7 @@
                             element.style.display = "block";
                         }
                         if (loadingIndicator) loadingIndicator.style.display = "none";
-                        triggerToast("🎉 ảnh kích thước lớn đã được tối ưu hóa mượt mà!");
+                        triggerToast("🎉 ảnh đã được tối ưu hóa!");
                     } catch (error) {
                         console.error(error);
                         triggerToast("❌ dung lượng bộ đệm quá giới hạn. vui lòng thử ảnh nhẹ hơn!");
@@ -1575,7 +1684,7 @@
                     }
                 };
                 coreImage.onerror = function() {
-                    triggerToast("❌ tệp ảnh lỗi hoặc sai định dạng kỹ thuật.");
+                    triggerToast("❌ tệp ảnh lỗi.");
                     rebuildPolaroidPlaceholder();
                 };
                 coreImage.src = e.target.result;
@@ -1650,11 +1759,12 @@
             document.getElementById("boxStreak").innerText = `${streakCounter} 🔥`;
         }
 
+        /* FIX: BIỂU ĐỒ HOÀN THIỆN ĐƯỜNG CƠ SỞ CHUẨN MỰC KHÔNG MÉO MÓ */
         function renderWeeklyBarChart() {
             const svgElement = document.getElementById("weeklySvgChart");
             svgElement.innerHTML = "";
 
-            const weekdayTitles = ["thứ 2", "thứ 3", "thứ 4", "thứ 5", "thứ 6", "thứ 7", "chủ nhật"];
+            const weekdayTitles = ["thứ 2", "thứ 3", "thứ 4", "thứ 5", "thứ 6", "thứ 7", "cn"];
             const currentCalendarDate = new Date();
             
             let dayPosition = currentCalendarDate.getDay();
@@ -1676,10 +1786,20 @@
             }
 
             const peakMinutes = Math.max(...calculatedWeekDataset.map(item => item.durationMinutes), 60);
-            const totalChartHeight = 110;
-            const visualColumnWidth = 38;
-            const spatialGap = 16;
-            const horizontalOriginX = 22;
+            const totalChartHeight = 100;
+            const visualColumnWidth = 32;
+            const spatialGap = 20;
+            const horizontalOriginX = 35;
+
+            // Bổ sung trục Baseline bên dưới chân cột biểu đồ cho chuyên nghiệp
+            const baselineNode = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            baselineNode.setAttribute("x1", 20);
+            baselineNode.setAttribute("y1", totalChartHeight + 15);
+            baselineNode.setAttribute("x2", 400);
+            baselineNode.setAttribute("y2", totalChartHeight + 15);
+            baselineNode.setAttribute("stroke", "rgba(140, 193, 233, 0.2)");
+            baselineNode.setAttribute("stroke-width", "1.5");
+            svgElement.appendChild(baselineNode);
 
             calculatedWeekDataset.forEach((data, index) => {
                 const currentX = horizontalOriginX + index * (visualColumnWidth + spatialGap);
@@ -1690,8 +1810,8 @@
                 barNode.setAttribute("x", currentX);
                 barNode.setAttribute("y", currentY);
                 barNode.setAttribute("width", visualColumnWidth);
-                barNode.setAttribute("height", calculatedBarHeight);
-                barNode.setAttribute("rx", "5");
+                barNode.setAttribute("height", Math.max(calculatedBarHeight, 2)); // Giữ tối thiểu 2px để thấy vị trí cột rỗng
+                barNode.setAttribute("rx", "6");
                 barNode.setAttribute("fill", data.durationMinutes > 0 ? "url(#neonSkyGradient)" : "rgba(255,255,255,0.06)");
                 svgElement.appendChild(barNode);
 
@@ -1709,7 +1829,7 @@
 
                 const textLabelNode = document.createElementNS("http://www.w3.org/2000/svg", "text");
                 textLabelNode.setAttribute("x", currentX + visualColumnWidth / 2);
-                textLabelNode.setAttribute("y", totalChartHeight + 30);
+                textLabelNode.setAttribute("y", totalChartHeight + 32);
                 textLabelNode.setAttribute("text-anchor", "middle");
                 textLabelNode.setAttribute("fill", "#8CC1E9");
                 textLabelNode.style.opacity = "0.6";
